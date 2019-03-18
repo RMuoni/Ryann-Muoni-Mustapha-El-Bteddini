@@ -1,4 +1,4 @@
-let airBnbJson = [
+let airbnbJson = [   
     {
       "room_id": 12247489,
       "host_id": 65760400,
@@ -7152,22 +7152,17 @@ let airBnbJson = [
       "last_modified": "2016-05-13 00:25:25.368373"
     }
    ];
+   
 
-var jsonString = JSON.stringify(airBnbJson)
-var jsonObject = JSON.parse(jsonString)
+   var jsonString = JSON.stringify(airbnbJson);
+   var jsonObject = JSON.parse(jsonString);
+   console.log(jsonString);
 
-
-//console.log(jsonString)
-/*
-var price = [];
-var reviews = [];
-
-for (i = 0; i < airBnbJson.length; i++) {
-  price.push(airBnbJson[i].price);
-  reviews.push(airBnbJson[i].reviews);
-  
-}
-
-console.log(price)
-console.log(reviews)
-*/
+   /*var price =[];
+   var reviews=[];
+   for(i=0; i<airbnbJson.length; i++){
+  price.push(airbnbJson[i].price);
+  reviews.push(airbnbJson[i].reviews);  
+    
+   }
+console.log(price,reviews)*/

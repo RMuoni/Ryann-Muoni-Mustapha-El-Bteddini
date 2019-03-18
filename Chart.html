@@ -1,84 +1,202 @@
-<html>    
+</html>
+
 <head>
-  <!-- Plotly.js -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <!-- Numeric JS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <!-- Numeric JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/numeric/1.2.6/numeric.min.js"></script>
 </head>
 
 <body>
-  
-  <div id="myDiv"><!-- Plotly chart will be drawn inside this DIV --></div>
-  <div id="myDiv2"><!-- Plotly chart will be drawn inside this DIV --></div>
-  <div id="myDiv3"><!-- Plotly chart will be drawn inside this DIV --></div>
-  <div id="myDiv4"><!-- Plotly chart will be drawn inside this DIV --></div>
 
-
+    <div id="myDiv">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
+    <div id="myDiv2">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
+    <div id="myDiv3">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
+    <div id="myDiv4">
+        <!-- Plotly chart will be drawn inside this DIV -->
+    </div>
 </body>
+<script src="InlamningsUppgift2.js"></script>
+<script>
+    var price = [];
+    var reviews = [];
+    var rent = [];
+    var room_type = [];
+    var accommodates = [];
+    for (i = 0; i < airbnbJson.length; i++) {
+        price.push(airbnbJson[i].price);
+        reviews.push(airbnbJson[i].reviews);
+        rent.push(airbnbJson[i].price);
+        accommodates.push(airbnbJson[i].accommodates);
+        room_type.push(airbnbJson[i].room_type);
+    }
 
-<script src="Charts.js"></script>
-  <script>
-      var price = [];
-      var reviews = [];
-      var rent = [];
-      var accommodates = [];
-      var room_type = [];
-for (i = 0; i < airBnbJson.length; i++) {
-    price.push(airBnbJson[i].price);
-    reviews.push(airBnbJson[i].reviews);
-    rent.push(airBnbJson[i].price);
-    accommodates.push(airBnbJson[i].accommodates);
-    room_type.push(airBnbJson[i].room_type);
+    //pie chart
 
-    //För Pie Chart 
-    var counts = {};
-       for (var i = 0; i < room_type.length; i++) {
-           counts[room_type[i]] = 1 + (counts[room_type[i]] || 0);
+    var entireHome = airbnbJson.filter(function (room) {
+        return room.room_type == "Entire home/apt"
+    })
 
-           var room_Procent = [ 
-             counts["Entire home/apt"] / (counts["Entire home/apt"] + counts["Private Room"]),
-           counts["Private Room"] / (counts["Entire home/apt"] + counts["Private Room"])
-       ];
+    var privateRoom = airbnbJson.filter(function (room) {
+        return room.room_type == "Private room"
+    })
 
-       }
-}
-var data = [{
-  x: price,
-  y: reviews,
-  mode: 'markers', 
-  type: 'scatter'
-}];
+    var sharedRoom = airbnbJson.filter(function (room) {
+        return room.room_type == "Shared room"
+    })
 
-var layout = {
-  height: 600,
-  width: 800
-};
+    var entireHomeProcent = (entireHome.length / airbnbJson.length) * 100;
+    var privateRoomProcent = (privateRoom.length / airbnbJson.length) * 100;
+    var shardRoomProcent = (sharedRoom.length / airbnbJson.length) * 100;
 
-var data2 = [{
-    x: rent,
-    type: 'histogram'
-}]
+    roomTypePercentage = [entireHomeProcent, privateRoomProcent, shardRoomProcent];
 
-var data3 = [{
-    x: accommodates,
-    type: 'histogram'
-}]
+    var data = [{
+        x: reviews,
+        y: price,
+        mode: 'markers',
+        type: 'scatter',
+          marker: {
+            color: '#FD6A02'
+          }
+    }];
 
-var data4 = [{
-  values: room_Procent,
-  labels:["Entire home/apt", "Private Room"],
-  type: 'pie'
-}]
+    var layout = {
+        height: 700,
+        width: 1400,
+        title: {
+          text: 'Review by Price',
+          font: {
+            family: 'Garamond',
+            size: 24,
+          },
+          xref: 'paper',
+          x: 0.05
+        },
+        xaxis: {
+    title: 'Reviews',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+  },
+  yaxis: {
+    title: 'Price',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+    },
+  }
 
-var layout1 = {
-  height: 400,
-  width: 500
-};
+    var data2 = [{
+        x: rent,
+        type: 'histogram',
+          marker: {
+            color: '#98FB98 '
+          }
+    }];
 
-Plotly.newPlot('myDiv', data, layout);
-Plotly.newPlot('myDiv2', data2);
-Plotly.newPlot('myDiv3', data3);
-Plotly.newPlot('myDiv4', data4, layout1);
+    var layout2 = {
+        height: 700,
+        width: 1400,
+        title: {
+          text: 'Rent Price by Airbnb',
+          font: {
+            family: 'Garamond',
+            size: 24,
+          },
+          xref: 'paper',
+          x: 0.05
+        },
+        xaxis: {
+    title: 'Rent Price',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+  },
+  yaxis: {
+    title: 'Amount of AirBnbs',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+    },
+  }
+
+
+    var data3 = [{
+        x: accommodates,
+        type: 'histogram',
+          marker: {
+            color: 'pink',
+          }
+    }];
+
+    var layout3 = {
+        height: 700,
+        width: 1400,
+        title: {
+          text: 'Guests by Hosts',
+          font: {
+            family: 'Garamond',
+            size: 24,
+          },
+          xref: 'paper',
+          x: 0.05
+        },
+        xaxis: {
+    title: 'Guests',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+  },
+  yaxis: {
+    title: 'Hosts',
+    titlefont: {
+      family: 'Courier New, monospace',
+      size: 18,
+      color: '#7f7f7f'
+    }
+    },
+  }
+    
+
+    var data4 = [{
+        values: roomTypePercentage,
+        labels: ['Entire home/apt', 'Private room', 'Shared room'],
+        type: 'pie'
+    }];
+    var layout4 = {
+        height: 800,
+        width: 1000,
+        title: {
+          text: 'Percentage by Room Type',
+          font: {
+            family: 'Garamond',
+            size: 24,
+          },
+      },
+    }
+
+
+    Plotly.newPlot('myDiv', data, layout);
+    Plotly.newPlot('myDiv2', data2, layout2);
+    Plotly.newPlot('myDiv3', data3, layout3);
+    Plotly.newPlot('myDiv4', data4, layout4);
 
 </script>
 
