@@ -22,7 +22,9 @@
         <!-- Plotly chart will be drawn inside this DIV -->
     </div>
 </body>
+<!--source till vår JS fil som innehåller json filen-->
 <script src="Charts.js"></script>
+<!--Variabler som innehåller specifik data från arrayn i json filen som vi gör grapherna med-->
 <script>
     var price = [];
     var reviews = [];
@@ -37,7 +39,7 @@
         room_type.push(airbnbJson[i].room_type);
     }
 
-    //pie chart
+    //pie chart för room_types
 
     var entireHome = airbnbJson.filter(function (room) {
         return room.room_type == "Entire home/apt"
@@ -57,6 +59,7 @@
 
     roomTypePercentage = [entireHomeProcent, privateRoomProcent, shardRoomProcent];
 
+// Grapherna som är skapade med ploty, visar vad för typ av graph, vilka values, storlek och färger 
     var data = [{
         x: reviews,
         y: price,
@@ -135,8 +138,7 @@
     },
   }
 
-
-    var data3 = [{
+      var data3 = [{
         x: accommodates,
         type: 'histogram',
           marker: {
@@ -174,7 +176,6 @@
     },
   }
     
-
     var data4 = [{
         values: roomTypePercentage,
         labels: ['Entire home/apt', 'Private room', 'Shared room'],
@@ -193,6 +194,7 @@
     }
 
 
+// myDiv hänvisar till var vår plots ligger på hemsidan.
     Plotly.newPlot('myDiv', data, layout);
     Plotly.newPlot('myDiv2', data2, layout2);
     Plotly.newPlot('myDiv3', data3, layout3);
